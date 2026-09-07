@@ -40,6 +40,54 @@ function toReading(station: MyStation, st: any): StationReading {
   }
 }
 
+interface GeoResult {
+  name: string
+  lat: number
+  lon: number
+  aqi: number
+  dominantPollutant: string
+  time?: string
+  pollutants?: {
+    pm25?: number
+    pm10?: number
+    o3?: number
+    no2?: number
+    so2?: number
+    co?: number
+  }
+}
+
+export async function getGeoFeed(lat: number, lon: number): Promise<GeoResult> {
+  const { data } = await api.get<StationFeed>(`/feed/geo:${lat};${lon}/`, {
+    params: { token: TOKEN },
+  })
+
+  if (data.status !== 'ok' || !data.data) {
+    throw new Error('No reading found near your location')
+  }
+
+  const st = data.data
+  const cityName = st.city?.name || 'Your area'
+  const geo = st.city?.geo || [lat, lon]
+
+  return {
+    name: cityName,
+    lat: geo[0],
+    lon: geo[1],
+    aqi: st.aqi ?? 0,
+    dominantPollutant: st.dominentpol,
+    time: st.time?.s,
+    pollutants: {
+      pm25: st.iaqi?.pm25?.v,
+      pm10: st.iaqi?.pm10?.v,
+      o3: st.iaqi?.o3?.v,
+      no2: st.iaqi?.no2?.v,
+      so2: st.iaqi?.so2?.v,
+      co: st.iaqi?.co?.v,
+    },
+  }
+}
+
 export async function getStationFeed(stationId: number): Promise<StationReading> {
   const station = MY_STATIONS.find((s) => s.id === stationId)
   if (!station) throw new Error(`Unknown station ${stationId}`)

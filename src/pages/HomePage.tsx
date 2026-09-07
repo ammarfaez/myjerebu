@@ -5,6 +5,7 @@ import StationCard from '../components/ui/StationCard'
 import IpuLegend from '../components/ui/IpuLegend'
 import AlertBanner from '../components/alerts/AlertBanner'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
+import CurrentLocationCard from '../components/ui/CurrentLocationCard'
 
 function HomePage() {
   const { t } = useTranslation()
@@ -35,6 +36,10 @@ function HomePage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mb-8">
+        <CurrentLocationCard />
+      </div>
+
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">{t('dashboard.title')}</h1>
