@@ -4,6 +4,9 @@ A modern web app that tracks the real-time **Air Pollutant Index (API)** / **Ind
 
 Bilingual — English 🇬🇧 & Bahasa Malaysia 🇲🇾.
 
+**Live site:** https://myjerebu.netlify.app
+**Source:** https://github.com/ammarfaez/myjerebu
+
 ## Features
 
 - 📊 **Dashboard** — Live IPU readings, worst/best stations, summary stats & alert banner
@@ -73,6 +76,8 @@ netlify deploy
 Build command: `npm run build`  
 Publish directory: `dist`  
 Add `VITE_WAQI_TOKEN` under **Site settings → Environment Variables**.
+
+Deployed at: **https://myjerebu.netlify.app**
 
 ## Project Structure
 
