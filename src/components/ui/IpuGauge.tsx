@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getIpuCategory } from '../../utils/ipu'
+import IpuFaceIcon from './IpuFaceIcon'
 
 interface IpuGaugeProps {
   value: number
@@ -64,6 +65,7 @@ function IpuGauge({ value, size = 'md', showLabel = true }: IpuGaugeProps) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <IpuFaceIcon level={cat.level} size={size === 'lg' ? 28 : size === 'md' ? 22 : 16} className="mb-0.5" />
         <span className={`${config.numberSize} font-bold text-slate-900`}>{value}</span>
         {showLabel && <span className={`${config.fontSize} font-medium`} style={{ color: cat.color }}>{cat.labelEn}</span>}
       </div>

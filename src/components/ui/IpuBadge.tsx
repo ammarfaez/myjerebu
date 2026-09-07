@@ -1,13 +1,15 @@
 import { IpuLevel } from '../../types'
 import { getCategoryLabel, getIpuCategory } from '../../utils/ipu'
 import { useTranslation } from 'react-i18next'
+import IpuFaceIcon from './IpuFaceIcon'
 
 interface IpuBadgeProps {
   value: number
   className?: string
+  withFace?: boolean
 }
 
-function IpuBadge({ value, className = '' }: IpuBadgeProps) {
+function IpuBadge({ value, className = '', withFace = true }: IpuBadgeProps) {
   const { i18n } = useTranslation()
   const lang = i18n.language as 'en' | 'ms'
   const cat = getIpuCategory(value)
@@ -24,6 +26,7 @@ function IpuBadge({ value, className = '' }: IpuBadgeProps) {
     <span
       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${bgMap[cat.level]} ${className}`}
     >
+      {withFace && <IpuFaceIcon level={cat.level} size={14} className="mr-1" />}
       {getCategoryLabel(cat.level, lang)}
     </span>
   )

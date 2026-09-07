@@ -3,6 +3,7 @@ import { LocateFixed, MapPin, Lock, Compass, Wind } from 'lucide-react'
 import { useGeolocation, useGeoReading } from '../../hooks/useLocation'
 import { getIpuCategory } from '../../utils/ipu'
 import IpuBadge from '../ui/IpuBadge'
+import IpuFaceIcon from '../ui/IpuFaceIcon'
 
 function CurrentLocationCard() {
   const { t } = useTranslation()
@@ -63,6 +64,7 @@ function CurrentLocationCard() {
 
         {state.status === 'success' && !isLoading && data && !error && (
           <div className="flex items-center gap-5">
+            <IpuFaceIcon level={getIpuCategory(data.aqi).level} size={56} className="shrink-0" />
             <div className="flex items-end gap-2">
               <span className="text-6xl font-black tabular-nums" style={{ color: getIpuCategory(data.aqi).color }}>
                 {data.aqi > 0 ? data.aqi : '—'}

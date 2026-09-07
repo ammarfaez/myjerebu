@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { StationReading } from '../../types'
-import { getIpuColor } from '../../utils/ipu'
+import { getIpuCategory, getIpuColor } from '../../utils/ipu'
 import { useTranslation } from 'react-i18next'
 import IpuBadge from './IpuBadge'
+import IpuFaceIcon from './IpuFaceIcon'
 
 interface StationCardProps {
   station: StationReading
@@ -13,6 +14,7 @@ interface StationCardProps {
 function StationCard({ station, rank, onClick }: StationCardProps) {
   const { t } = useTranslation()
   const color = getIpuColor(station.aqi)
+  const cat = getIpuCategory(station.aqi)
   const name = station.station?.name || `Station ${station.station?.idx}`
 
   return (
@@ -32,10 +34,11 @@ function StationCard({ station, rank, onClick }: StationCardProps) {
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-3xl font-bold tabular-nums" style={{ color }}>
+          <span className="text-3xl font-bold tabular-nums leading-none" style={{ color }}>
             {station.aqi}
           </span>
-          <span className="text-[10px] text-slate-400 uppercase tracking-wider mt-1">
+          <IpuFaceIcon level={cat.level} size={22} className="mt-1.5" />
+          <span className="text-[10px] text-slate-400 uppercase tracking-wider mt-1.5">
             {t('card.aqi')}
           </span>
         </div>
