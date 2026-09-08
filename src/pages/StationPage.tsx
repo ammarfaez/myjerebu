@@ -5,7 +5,7 @@ import { ArrowLeft, MapPin, Clock, Activity, Heart } from 'lucide-react'
 import IpuGauge from '../components/ui/IpuGauge'
 import IpuBadge from '../components/ui/IpuBadge'
 import { getHealthAdvice, getIpuCategory } from '../utils/ipu'
-import LoadingSpinner from '../components/ui/LoadingSpinner'
+import StationPageSkeleton from '../components/ui/StationPageSkeleton'
 
 function StationPage() {
   const { id } = useParams<{ id: string }>()
@@ -14,7 +14,7 @@ function StationPage() {
   const stationId = id ? parseInt(id, 10) : null
   const { data: reading, isLoading, error } = useStation(stationId)
 
-  if (isLoading) return <LoadingSpinner />
+  if (isLoading) return <StationPageSkeleton />
   if (error || !reading)
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">

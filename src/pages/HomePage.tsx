@@ -5,8 +5,8 @@ import { AlertTriangle, BarChart3, Clock, CloudRain, Search, Wind, X } from 'luc
 import StationCard from '../components/ui/StationCard'
 import IpuLegend from '../components/ui/IpuLegend'
 import AlertBanner from '../components/alerts/AlertBanner'
-import LoadingSpinner from '../components/ui/LoadingSpinner'
 import CurrentLocationCard from '../components/ui/CurrentLocationCard'
+import HomePageSkeleton from '../components/ui/HomePageSkeleton'
 import { STATION_ALIASES } from '../utils/constants'
 
 function HomePage() {
@@ -38,7 +38,7 @@ function HomePage() {
     })
   }, [stations, normalizedQuery])
 
-  if (isLoading) return <LoadingSpinner />
+  if (isLoading) return <HomePageSkeleton />
   if (error)
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">

@@ -5,7 +5,7 @@ import L from 'leaflet'
 import { Link } from 'react-router-dom'
 import { getIpuColor } from '../utils/ipu'
 import IpuLegend from '../components/ui/IpuLegend'
-import LoadingSpinner from '../components/ui/LoadingSpinner'
+import MapPageSkeleton from '../components/ui/MapPageSkeleton'
 import 'leaflet/dist/leaflet.css'
 
 function createIcon(aqi: number): L.DivIcon {
@@ -38,7 +38,7 @@ function MapPage() {
   const { t } = useTranslation()
   const { data: stations, isLoading } = useAllStations()
 
-  if (isLoading) return <LoadingSpinner />
+  if (isLoading) return <MapPageSkeleton />
 
   const center: [number, number] = [3.5, 109]
 
