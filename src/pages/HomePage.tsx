@@ -7,6 +7,7 @@ import IpuLegend from '../components/ui/IpuLegend'
 import AlertBanner from '../components/alerts/AlertBanner'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import CurrentLocationCard from '../components/ui/CurrentLocationCard'
+import { STATION_ALIASES } from '../utils/constants'
 
 function HomePage() {
   const { t } = useTranslation()
@@ -23,10 +24,17 @@ function HomePage() {
   const filteredStations = useMemo(() => {
     if (!stations) return []
     if (!normalizedQuery) return stations
+    const aliasTargets =
+      STATION_ALIASES[normalizedQuery] ||
+      Object.entries(STATION_ALIASES).find(([key]) => normalizedQuery.includes(key))?.[1]
     return stations.filter((s) => {
       const name = s.station?.name?.toLowerCase() || ''
       const state = s.station?.state?.toLowerCase() || ''
-      return name.includes(normalizedQuery) || state.includes(normalizedQuery)
+      if (name.includes(normalizedQuery) || state.includes(normalizedQuery)) return true
+      if (aliasTargets) {
+        return aliasTargets.some((target) => name.includes(target.toLowerCase()))
+      }
+      return false
     })
   }, [stations, normalizedQuery])
 
