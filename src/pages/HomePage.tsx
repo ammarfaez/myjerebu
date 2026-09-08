@@ -1,6 +1,7 @@
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAllStations } from '../hooks/useStations'
-import { AlertTriangle, BarChart3, Clock, CloudRain, Wind } from 'lucide-react'
+import { AlertTriangle, BarChart3, Clock, CloudRain, Search, Wind, X } from 'lucide-react'
 import StationCard from '../components/ui/StationCard'
 import IpuLegend from '../components/ui/IpuLegend'
 import AlertBanner from '../components/alerts/AlertBanner'
@@ -10,12 +11,24 @@ import CurrentLocationCard from '../components/ui/CurrentLocationCard'
 function HomePage() {
   const { t } = useTranslation()
   const { data: stations, isLoading, error, refetch, isFetching } = useAllStations()
+  const [query, setQuery] = useState('')
 
   const worst5 = stations?.slice(0, 5) ?? []
   const best5 = stations?.slice(-5).reverse() ?? []
   const above100 = stations?.filter((s) => s.aqi > 100) ?? []
   const above200 = stations?.filter((s) => s.aqi > 200) ?? []
   const highest = worst5[0] || null
+
+  const normalizedQuery = query.trim().toLowerCase()
+  const filteredStations = useMemo(() => {
+    if (!stations) return []
+    if (!normalizedQuery) return stations
+    return stations.filter((s) => {
+      const name = s.station?.name?.toLowerCase() || ''
+      const state = s.station?.state?.toLowerCase() || ''
+      return name.includes(normalizedQuery) || state.includes(normalizedQuery)
+    })
+  }, [stations, normalizedQuery])
 
   if (isLoading) return <LoadingSpinner />
   if (error)
@@ -87,6 +100,51 @@ function HomePage() {
 
       <div className="mt-8">
         <IpuLegend />
+      </div>
+
+      <div className="mt-10">
+        <div className="relative">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t('actions.search')}
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-colors"
+          />
+          {query && (
+            <button
+              onClick={() => setQuery('')}
+              aria-label="Clear search"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="text-lg font-bold text-slate-900 mb-4">
+          {query.trim()
+            ? t('dashboard.searchResults')
+            : t('dashboard.allStations')}{' '}
+          <span className="text-sm font-normal text-slate-400">
+            ({filteredStations.length} {t('dashboard.stationCount')})
+          </span>
+        </h2>
+        {filteredStations.length === 0 ? (
+          <div className="rounded-2xl bg-white border border-slate-200 p-8 text-center">
+            <Search className="w-8 h-8 text-slate-300 mx-auto" />
+            <p className="mt-3 text-sm text-slate-500">{t('dashboard.noResults')}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredStations.map((station, i) => (
+              <StationCard key={station.station?.idx || i} station={station} />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mt-10">

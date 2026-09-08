@@ -31,6 +31,10 @@ const resources = {
         updatedHourly: 'Updated hourly',
         alert: 'Alert',
         noData: 'No data available',
+        allStations: 'All Stations',
+        searchResults: 'Search Results',
+        stationCount: 'stations',
+        noResults: 'No stations found. Try a different location name.',
       },
       myLocation: {
         title: 'Your Area',
@@ -134,6 +138,10 @@ const resources = {
         updatedHourly: 'Dikemas kini setiap jam',
         alert: 'Amaran',
         noData: 'Tiada data tersedia',
+        allStations: 'Semua Stesen',
+        searchResults: 'Hasil Carian',
+        stationCount: 'stesen',
+        noResults: 'Tiada stesen dijumpai. Cuba nama lokasi lain.',
       },
       myLocation: {
         title: 'Kawasan Anda',
