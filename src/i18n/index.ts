@@ -52,6 +52,14 @@ const resources = {
         pm25: 'PM2.5',
         pm10: 'PM10',
       },
+      table: {
+        station: 'Station',
+        state: 'State',
+        aqi: 'API',
+        category: 'Category',
+        pollutant: 'Main Pollutant',
+        showMore: 'Show more',
+      },
       map: {
         tapToView: 'Tap to view',
       },
@@ -151,6 +159,14 @@ const resources = {
         mainPollutant: 'Pencemar Utama',
         pm25: 'PM2.5',
         pm10: 'PM10',
+      },
+      table: {
+        station: 'Stesen',
+        state: 'Negeri',
+        aqi: 'IPU',
+        category: 'Kategori',
+        pollutant: 'Pencemar Utama',
+        showMore: 'Tunjuk lagi',
       },
       map: {
         tapToView: 'Ketuk untuk melihat',

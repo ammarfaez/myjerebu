@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAllStations } from '../hooks/useStations'
 import { AlertTriangle, BarChart3, Clock, CloudRain, Search, Wind, X } from 'lucide-react'
 import StationCard from '../components/ui/StationCard'
+import StationTable from '../components/ui/StationTable'
 import IpuLegend from '../components/ui/IpuLegend'
 import AlertBanner from '../components/alerts/AlertBanner'
 import CurrentLocationCard from '../components/ui/CurrentLocationCard'
@@ -122,6 +123,41 @@ function HomePage() {
         </Suspense>
       </div>
 
+      {!query.trim() && (
+        <>
+          <div className="mt-10">
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.worstAir')}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {worst5.map((station, i) => (
+                <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.cleanestAir')}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {best5.map((station, i) => (
+                <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
+              ))}
+            </div>
+          </div>
+
+          {above100.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-lg font-bold text-slate-900 mb-4">
+                {t('dashboard.stationsAbove100')} ({above100.length})
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {above100.map((station, i) => (
+                  <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
       <div className="mt-10">
         <div className="relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -159,44 +195,9 @@ function HomePage() {
             <p className="mt-3 text-sm text-slate-500">{t('dashboard.noResults')}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredStations.map((station, i) => (
-              <StationCard key={station.station?.idx || i} station={station} />
-            ))}
-          </div>
+          <StationTable key={normalizedQuery} stations={filteredStations} />
         )}
       </div>
-
-      <div className="mt-10">
-        <h2 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.worstAir')}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {worst5.map((station, i) => (
-            <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-10">
-        <h2 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.cleanestAir')}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {best5.map((station, i) => (
-            <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
-          ))}
-        </div>
-      </div>
-
-      {above100.length > 0 && (
-        <div className="mt-10">
-          <h2 className="text-lg font-bold text-slate-900 mb-4">
-            {t('dashboard.stationsAbove100')} ({above100.length})
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {above100.map((station, i) => (
-              <StationCard key={station.station?.idx || i} station={station} rank={i + 1} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
