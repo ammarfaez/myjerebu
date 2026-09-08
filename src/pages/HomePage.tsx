@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAllStations } from '../hooks/useStations'
 import { AlertTriangle, BarChart3, Clock, CloudRain, Search, Wind, X } from 'lucide-react'
@@ -8,6 +8,8 @@ import AlertBanner from '../components/alerts/AlertBanner'
 import CurrentLocationCard from '../components/ui/CurrentLocationCard'
 import HomePageSkeleton from '../components/ui/HomePageSkeleton'
 import { STATION_ALIASES } from '../utils/constants'
+
+const StationMap = lazy(() => import('../components/ui/StationMap'))
 
 function HomePage() {
   const { t } = useTranslation()
@@ -108,6 +110,16 @@ function HomePage() {
 
       <div className="mt-8">
         <IpuLegend />
+      </div>
+
+      <div className="mt-10">
+        <Suspense
+          fallback={
+            <div className="rounded-2xl border border-slate-200 bg-slate-200 animate-pulse" style={{ height: 400 }} />
+          }
+        >
+          <StationMap stations={stations ?? []} />
+        </Suspense>
       </div>
 
       <div className="mt-10">

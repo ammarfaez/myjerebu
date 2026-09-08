@@ -8,7 +8,6 @@ import Footer from './components/layout/Footer'
 import LoadingSpinner from './components/ui/LoadingSpinner'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
-const MapPage = lazy(() => import('./pages/MapPage'))
 const StationPage = lazy(() => import('./pages/StationPage'))
 const HealthPage = lazy(() => import('./pages/HealthPage'))
 
@@ -43,7 +42,6 @@ function App() {
             <Suspense fallback={<LoadingSpinner />}>
               <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/map" element={<MapPage />} />
               <Route path="/station/:id" element={<StationPage />} />
               <Route path="/health" element={<HealthPage />} />
               <Route

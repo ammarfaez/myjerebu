@@ -8,8 +8,6 @@ const resources = {
       tagline: 'Real-time Air Pollutant Index (API) for Malaysia',
       nav: {
         home: 'Dashboard',
-        map: 'Map',
-        stations: 'Stations',
         about: 'About',
       },
       actions: {
@@ -55,12 +53,7 @@ const resources = {
         pm10: 'PM10',
       },
       map: {
-        title: 'Interactive Haze Map',
-        subtitle: 'Click a marker to view station details',
-        legend: 'API Legend',
         tapToView: 'Tap to view',
-        zoomIn: 'Zoom in',
-        zoomOut: 'Zoom out',
       },
       station: {
         title: 'Station Details',
@@ -115,8 +108,6 @@ const resources = {
       tagline: 'Indeks Pencemaran Udara (IPU) Masa Nyata untuk Malaysia',
       nav: {
         home: 'Paparan Utama',
-        map: 'Peta',
-        stations: 'Stesen',
         about: 'Maklumat',
       },
       actions: {
@@ -162,12 +153,7 @@ const resources = {
         pm10: 'PM10',
       },
       map: {
-        title: 'Peta Jerebu Interaktif',
-        subtitle: 'Klik penanda untuk melihat butiran stesen',
-        legend: 'Legenda IPU',
         tapToView: 'Ketuk untuk melihat',
-        zoomIn: 'Zum masuk',
-        zoomOut: 'Zum keluar',
       },
       station: {
         title: 'Butiran Stesen',

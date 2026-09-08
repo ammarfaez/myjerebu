@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
-import { CloudSun, CalendarDays, Map, Info } from 'lucide-react'
+import { CloudSun, CalendarDays, Info } from 'lucide-react'
 import LanguageToggle from './LanguageToggle'
 
 function Header() {
@@ -8,7 +8,6 @@ function Header() {
 
   const navItems = [
     { to: '/', label: t('nav.home'), icon: <CalendarDays className="w-4 h-4" /> },
-    { to: '/map', label: t('nav.map'), icon: <Map className="w-4 h-4" /> },
     { to: '/health', label: t('nav.about'), icon: <Info className="w-4 h-4" /> },
   ]
 
